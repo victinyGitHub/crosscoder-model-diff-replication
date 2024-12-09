@@ -4,6 +4,12 @@ from trainer import Trainer
 # %%
 device = 'cuda:0'
 
+N_1 = 30
+pythia1 = HookedTransformer.from_pretrained("pythia-19m", checkpoint_index=N_1, device = device)
+
+N_2 = 60
+pythia2 = HookedTransformer.from_pretrained("pythia-19m", checkpoint_index=N_2, device = device)
+
 base_model = HookedTransformer.from_pretrained(
     "gemma-2-2b", 
     device=device, 
@@ -27,7 +33,7 @@ default_cfg = {
     "l1_coeff": 2,
     "beta1": 0.9,
     "beta2": 0.999,
-    "d_in": base_model.cfg.d_model,
+    "d_in": pythia1.cfg.d_model,
     "dict_size": 2**14,
     "seq_len": 1024,
     "enc_dtype": "fp32",
@@ -39,11 +45,11 @@ default_cfg = {
     "save_every": 30000,
     "dec_init_norm": 0.08,
     "hook_point": "blocks.14.hook_resid_pre",
-    "wandb_project": "YOUR_WANDB_PROJECT",
-    "wandb_entity": "YOUR_WANDB_ENTITY",
+    "wandb_project": "crosscoder-training",
+    "wandb_entity": "xiaoxiaoanddali",
 }
 cfg = arg_parse_update_cfg(default_cfg)
 
-trainer = Trainer(cfg, base_model, chat_model, all_tokens)
+trainer = Trainer(cfg, pythia1, pythia2, all_tokens)
 trainer.train()
 # %%

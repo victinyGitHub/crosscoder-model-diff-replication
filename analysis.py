@@ -29,7 +29,8 @@ fig.update_xaxes(
     ticktext=['0', '0.25', '0.5', '0.75', '1.0']
 )
 
-fig.show()
+# Save instead of show
+fig.write_image("plot1_histogram.png")
 
 # %%
 shared_latent_mask = (relative_norms < 0.7) & (relative_norms > 0.3)
@@ -40,12 +41,9 @@ shared_latent_mask.shape
 cosine_sims = (cross_coder.W_dec[:, 0, :] * cross_coder.W_dec[:, 1, :]).sum(dim=-1) / (cross_coder.W_dec[:, 0, :].norm(dim=-1) * cross_coder.W_dec[:, 1, :].norm(dim=-1))
 cosine_sims.shape
 # %%
-import plotly.express as px
-import torch
 
 fig = px.histogram(
     cosine_sims[shared_latent_mask].to(torch.float32).detach().cpu().numpy(), 
-    #title="Cosine similarity of decoder vectors between models",
     log_y=True,  # Sets the y-axis to log scale
     range_x=[-1, 1],  # Sets the x-axis range from -1 to 1
     nbins=100,  # Adjust this value to change the number of bins
@@ -55,5 +53,7 @@ fig = px.histogram(
 fig.update_layout(showlegend=False)
 fig.update_yaxes(title_text="Number of Latents (log scale)")
 
-fig.show()
+# Save instead of show
+fig.write_image("plot2_cosine_similarity.png")
+
 # %%

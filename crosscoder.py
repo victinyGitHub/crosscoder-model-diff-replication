@@ -159,8 +159,8 @@ class CrossCoder(nn.Module):
     @classmethod
     def load_from_hf(
         cls,
-        repo_id: str = "ckkissane/crosscoder-gemma-2-2b-model-diff",
-        path: str = "blocks.14.hook_resid_pre",
+        repo_id: str = "victiny1223/crosscoder-checkpoints",
+        path: str = "blocks.3.hook_resid_pre",
         device: Optional[Union[str, torch.device]] = None
     ) -> "CrossCoder":
         """
@@ -179,11 +179,11 @@ class CrossCoder(nn.Module):
         # Download config and weights
         config_path = hf_hub_download(
             repo_id=repo_id,
-            filename=f"{path}/cfg.json"
+            filename=f"checkpoints/version_0/0_cfg.json"
         )
         weights_path = hf_hub_download(
             repo_id=repo_id,
-            filename=f"{path}/cc_weights.pt"
+            filename=f"checkpoints/version_0/0.pt"
         )
 
         # Load config

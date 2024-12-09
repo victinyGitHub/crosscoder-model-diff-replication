@@ -1,4 +1,3 @@
-
 from utils import *
 
 from torch import nn
@@ -8,9 +7,10 @@ from typing import Optional, Union
 from huggingface_hub import hf_hub_download
 
 from typing import NamedTuple
+import os
 
 DTYPES = {"fp32": torch.float32, "fp16": torch.float16, "bf16": torch.bfloat16}
-SAVE_DIR = Path("/workspace/crosscoder-model-diff-replication/checkpoints")
+SAVE_DIR = Path("~/.cache/huggingface/crosscoder-model-diff-replication/checkpoints")
 
 class LossOutput(NamedTuple):
     # loss: torch.Tensor
@@ -125,10 +125,15 @@ class CrossCoder(nn.Module):
         return LossOutput(l2_loss=l2_loss, l1_loss=l1_loss, l0_loss=l0_loss, explained_variance=explained_variance, explained_variance_A=explained_variance_A, explained_variance_B=explained_variance_B)
 
     def create_save_dir(self):
-        base_dir = Path("/workspace/crosscoder-model-diff-replication/checkpoints")
+        # Expand the ~ to full home directory path
+        base_dir = Path(os.path.expanduser("~/.cache/huggingface/crosscoder-model-diff-replication/checkpoints"))
+        
+        # Create the base directory if it doesn't exist
+        base_dir.mkdir(parents=True, exist_ok=True)
+        
         version_list = [
             int(file.name.split("_")[1])
-            for file in list(SAVE_DIR.iterdir())
+            for file in list(base_dir.iterdir())
             if "version" in str(file)
         ]
         if len(version_list):
@@ -136,7 +141,7 @@ class CrossCoder(nn.Module):
         else:
             version = 0
         self.save_dir = base_dir / f"version_{version}"
-        self.save_dir.mkdir(parents=True)
+        self.save_dir.mkdir(parents=True, exist_ok=True)
 
     def save(self):
         if self.save_dir is None:
@@ -200,7 +205,7 @@ class CrossCoder(nn.Module):
 
     @classmethod
     def load(cls, version_dir, checkpoint_version):
-        save_dir = Path("/workspace/crosscoder-model-diff-replication/checkpoints") / str(version_dir)
+        save_dir = Path("~/.cache/huggingface/crosscoder-model-diff-replication/checkpoints") / str(version_dir)
         cfg_path = save_dir / f"{str(checkpoint_version)}_cfg.json"
         weight_path = save_dir / f"{str(checkpoint_version)}.pt"
 

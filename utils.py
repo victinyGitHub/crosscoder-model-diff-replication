@@ -178,19 +178,20 @@ def arg_parse_update_cfg(default_cfg):
     return cfg    
 
 def load_pile_lmsys_mixed_tokens():
+    cache_dir = os.path.expanduser("~/.cache/huggingface")
     try:
         print("Loading data from disk")
-        all_tokens = torch.load("/workspace/data/pile-lmsys-mix-1m-tokenized-gemma-2.pt")
+        all_tokens = torch.load(os.path.join(cache_dir, "data/pile-deduped-pythia-random-sampled.pt"))
     except:
         print("Data is not cached. Loading data from HF")
         data = load_dataset(
-            "ckkissane/pile-lmsys-mix-1m-tokenized-gemma-2", 
+            "EleutherAI/pile-deduped-pythia-random-sampled", 
             split="train", 
-            cache_dir="/workspace/cache/"
+            cache_dir=os.path.join(cache_dir, "cache")
         )
-        data.save_to_disk("/workspace/data/pile-lmsys-mix-1m-tokenized-gemma-2.hf")
-        data.set_format(type="torch", columns=["input_ids"])
-        all_tokens = data["input_ids"]
-        torch.save(all_tokens, "/workspace/data/pile-lmsys-mix-1m-tokenized-gemma-2.pt")
+        data.save_to_disk(os.path.join(cache_dir, "data/pile-deduped-pythia-random-sampled.hf"))
+        data.set_format(type="torch", columns=["Tokens"])
+        all_tokens = data["Tokens"]
+        torch.save(all_tokens, os.path.join(cache_dir, "data/pile-deduped-pythia-random-sampled.pt"))
         print(f"Saved tokens to disk")
     return all_tokens

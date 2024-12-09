@@ -41,6 +41,12 @@ class Buffer:
 
     @torch.no_grad()
     def estimate_norm_scaling_factor(self, batch_size, model, n_batches_for_norm_estimate: int = 100):
+        print("=== Debug Info ===")
+        print(f"Tokens shape: {self.all_tokens.shape}")
+        print(f"Batch size: {batch_size}")
+        print(f"Model context length: {model.cfg.n_ctx}")
+        print(f"Model d_model: {model.cfg.d_model}")
+    
         # stolen from SAELens https://github.com/jbloomAus/SAELens/blob/6d6eaef343fd72add6e26d4c13307643a62c41bf/sae_lens/training/activations_store.py#L370
         norms_per_batch = []
         for i in tqdm.tqdm(

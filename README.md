@@ -1,4 +1,10 @@
 # TLDR
+In the branches you'll see experiments done with crosscoders being trained on different models, and WIP rough jupyter notebooks digging around the trained latents. When they are cleaned up, they should be moved back to main in a neat folder of their own, along with the results found.
+Currently WIP:
+- Pythia 19m model diffing experiments between checkpoint 30 of Pythia 19m and checkpoint 60 of Pythia 19m. Hoping to discover what latents emerge throughout the training process.
+
+# Below is original ReadMe
+# TLDR
 
 Open source replication of [Anthropic's Crosscoders for Model Diffing](https://transformer-circuits.pub/2024/crosscoders/index.html#model-diffing). 
 The crosscoder was trained to model diff the Gemma-2 2b base and IT residual stream at the middle layer.

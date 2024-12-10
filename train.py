@@ -21,7 +21,7 @@ pythia2 = HookedTransformer.from_pretrained("pythia-19m", checkpoint_index=N_2, 
 # )
 
 # %%
-all_tokens = load_pile_lmsys_mixed_tokens()
+all_tokens = load_pile_deduped_pythia_random_sampled()
 
 # %%
 default_cfg = {

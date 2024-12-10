@@ -177,7 +177,7 @@ def arg_parse_update_cfg(default_cfg):
     print(json.dumps(cfg, indent=2))
     return cfg    
 
-def load_pile_lmsys_mixed_tokens():
+def load_pile_deduped_pythia_random_sampled():
     cache_dir = os.path.expanduser("~/.cache/huggingface")
     try:
         print("Loading data from disk")

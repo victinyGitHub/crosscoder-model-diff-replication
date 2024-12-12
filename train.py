@@ -5,10 +5,10 @@ from trainer import Trainer
 device = 'cuda:0'
 
 N_1 = 30
-pythia1 = HookedTransformer.from_pretrained("pythia-19m", checkpoint_index=N_1, device = device)
+pythia1 = HookedTransformer.from_pretrained("pythia-1.3b", checkpoint_index=N_1, device = device)
 
-N_2 = 60
-pythia2 = HookedTransformer.from_pretrained("pythia-19m", checkpoint_index=N_2, device = device)
+N_2 = 90
+pythia2 = HookedTransformer.from_pretrained("pythia-1.3b", checkpoint_index=N_2, device = device)
 
 # base_model = HookedTransformer.from_pretrained(
 #     "gemma-2-2b", 
@@ -26,10 +26,10 @@ all_tokens = load_pile_deduped_pythia_random_sampled()
 # %%
 default_cfg = {
     "seed": 49,
-    "batch_size": 1024,
+    "batch_size": 4096,
     "buffer_mult": 128,
     "lr": 5e-5,
-    "num_tokens": 20_000_000,
+    "num_tokens": 300_000_000, # current pile dataset has 10 million tokens. going for 10 epochs
     "l1_coeff": 2,
     "beta1": 0.9,
     "beta2": 0.999,
@@ -45,7 +45,7 @@ default_cfg = {
     "save_every": 30000,
     "dec_init_norm": 0.08,
     "hook_point": "blocks.3.hook_resid_pre",
-    "wandb_project": "crosscoder-training",
+    "wandb_project": "pythia crosscoder 1.3b training",
     "wandb_entity": "xiaoxiaoanddali-imperial-college-london",
 }
 cfg = arg_parse_update_cfg(default_cfg)

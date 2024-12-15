@@ -30,12 +30,12 @@ default_cfg = {
     "buffer_mult": 128,
     "lr": 5e-5,
     "num_tokens": 320_000_000, # current pile dataset has 320 million tokens. going for 1 epoch due to time constraints
-    "l1_coeff": 3,
+    "l1_coeff": 1.5,
     "beta1": 0.9,
     "beta2": 0.999,
     "d_in": pythia1.cfg.d_model,
-    "dict_size": 2**14,
-    "seq_len": 2048,
+    "dict_size": 2**10, # this is the size of hidden dim
+    "seq_len": pythia1.cfg.n_ctx,
     "enc_dtype": "fp32",
     "model_name": "pythia1.3b30v90l18",
     "site": "resid_pre",

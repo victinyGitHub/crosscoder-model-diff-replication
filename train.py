@@ -21,7 +21,7 @@ pythia2 = HookedTransformer.from_pretrained("pythia-1.3b", checkpoint_index=N_2,
 # )
 
 # %%
-all_tokens = load_pile_deduped_pythia_random_sampled()
+all_tokens = load_pile_deduped_pythia_random_sampled().reshape((-1, 1024))
 
 # %%
 default_cfg = {
@@ -30,11 +30,11 @@ default_cfg = {
     "buffer_mult": 128,
     "lr": 5e-5,
     "num_tokens": 320_000_000, # current pile dataset has 320 million tokens. going for 1 epoch due to time constraints
-    "l1_coeff": 1.5,
+    "l1_coeff": 2,
     "beta1": 0.9,
     "beta2": 0.999,
     "d_in": pythia1.cfg.d_model,
-    "dict_size": 2**10, # this is the size of hidden dim
+    "dict_size": 2**14, # this is the size of hidden dim
     "seq_len": pythia1.cfg.n_ctx,
     "enc_dtype": "fp32",
     "model_name": "pythia1.3b30v90l18",

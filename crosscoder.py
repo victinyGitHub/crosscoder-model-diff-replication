@@ -179,11 +179,11 @@ class CrossCoder(nn.Module):
         # Download config and weights
         config_path = hf_hub_download(
             repo_id=repo_id,
-            filename=f"checkpoints/version_1/2_cfg.json"
+            filename=f"checkpoints/version_12/5_cfg.json"
         )
         weights_path = hf_hub_download(
             repo_id=repo_id,
-            filename=f"checkpoints/version_1/2.pt"
+            filename=f"checkpoints/version_12/5.pt"
         )
 
         # Load config

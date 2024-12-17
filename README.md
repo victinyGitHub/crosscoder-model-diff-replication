@@ -1,4 +1,10 @@
 # TLDR
+This was originally a series of experiments poking around latents to do with model diffing Pythia 19m models at different training checkpoints using sparse crosscoders. 
+This later evolved into doing the same analysis but using the much larger trained models of Pythia 1.3b. Current poking around is with specifically checkpoints 30 and 90.
+See `pythia_crosscoder_analysis.ipynb` for examples on using this repo to analyse the trained crosscoder!
+# Original repo TLDR below
+
+# TLDR
 
 Open source replication of [Anthropic's Crosscoders for Model Diffing](https://transformer-circuits.pub/2024/crosscoders/index.html#model-diffing). 
 The crosscoder was trained to model diff the Gemma-2 2b base and IT residual stream at the middle layer.

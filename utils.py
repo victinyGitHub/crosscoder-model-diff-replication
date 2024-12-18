@@ -189,9 +189,9 @@ def load_pile_deduped_pythia_random_sampled():
             split="train", 
             cache_dir=os.path.join(cache_dir, "cache")
         )
-        data.save_to_disk(os.path.join(cache_dir, "data/pile-deduped-pythia-random-sampled.hf"))
+        data.save_to_disk(os.path.join(cache_dir, "data/pile-deduped-pythia-random-sampled.hf")) # HARDCODED
         data.set_format(type="torch", columns=["Tokens"])
         all_tokens = data["Tokens"]
-        torch.save(all_tokens, os.path.join(cache_dir, "data/pile-deduped-pythia-random-sampled.pt"))
+        torch.save(all_tokens, os.path.join(cache_dir, "data/pile-deduped-pythia-random-sampled.pt")) 
         print(f"Saved tokens to disk")
-    return all_tokens
+    return all_tokens.reshape((-1, 1024)) # 1024 is half max context length of pythia HARDCODED

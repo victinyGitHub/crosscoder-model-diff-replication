@@ -179,11 +179,11 @@ class CrossCoder(nn.Module):
         # Download config and weights
         config_path = hf_hub_download(
             repo_id=repo_id,
-            filename=f"checkpoints/version_12/5_cfg.json"
+            filename=f"checkpoints/version_13/2_cfg.json" # HARDCODED
         )
         weights_path = hf_hub_download(
             repo_id=repo_id,
-            filename=f"checkpoints/version_12/5.pt"
+            filename=f"checkpoints/version_13/2.pt" # HARDCODED
         )
 
         # Load config
@@ -204,7 +204,7 @@ class CrossCoder(nn.Module):
         return instance
 
     @classmethod
-    def load(cls, version_dir, checkpoint_version):
+    def load(cls, version_dir, checkpoint_version): # HARDCODED
         save_dir = Path("~/.cache/huggingface/crosscoder-model-diff-replication/checkpoints") / str(version_dir)
         cfg_path = save_dir / f"{str(checkpoint_version)}_cfg.json"
         weight_path = save_dir / f"{str(checkpoint_version)}.pt"

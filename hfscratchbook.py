@@ -59,6 +59,6 @@ def upload_checkpoint_to_hf(
 if __name__ == "__main__":
     # Example usage:
     upload_checkpoint_to_hf(
-        version_dir="version_12",
-        checkpoint_version="5"
+        version_dir="version_13",
+        checkpoint_version="2"
     )

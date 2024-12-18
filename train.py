@@ -25,12 +25,12 @@ all_tokens = load_pile_deduped_pythia_random_sampled().reshape((-1, 1024))
 
 # %%
 default_cfg = {
-    "seed": 49,
+    "seed": 1223,
     "batch_size": 4096,
     "buffer_mult": 128,
     "lr": 5e-5,
     "num_tokens": 320_000_000, # current pile dataset has 320 million tokens. going for 1 epoch due to time constraints
-    "l1_coeff": 2,
+    "l1_coeff": 2.5,
     "beta1": 0.9,
     "beta2": 0.999,
     "d_in": pythia1.cfg.d_model,

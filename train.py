@@ -28,9 +28,9 @@ default_cfg = {
     "seed": 1223,
     "batch_size": 4096,
     "buffer_mult": 128,
-    "lr": 5e-5,
+    "lr": 1e-4,
     "num_tokens": 320_000_000, # current pile dataset has 320 million tokens. going for 1 epoch due to time constraints
-    "l1_coeff": 2.5,
+    "l1_coeff": 3,
     "beta1": 0.9,
     "beta2": 0.999,
     "d_in": pythia1.cfg.d_model,

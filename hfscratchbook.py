@@ -7,7 +7,7 @@ import os
 def upload_checkpoint_to_hf(
     version_dir: str, 
     checkpoint_version: str,
-    repo_id: str = "victiny1223/crosscoder-checkpoints",
+    repo_id: str = "victiny1223/crosscoder-automated-checkpoints",
     commit_message: str = None
 ):
     """
@@ -20,7 +20,7 @@ def upload_checkpoint_to_hf(
         commit_message: Optional commit message
     """
     # Load the checkpoint
-    save_dir = Path(os.path.expanduser("~/.cache/huggingface/crosscoder-model-diff-replication/checkpoints")) / version_dir
+    save_dir = Path(os.path.expanduser("~/.cache/huggingface/crosscoder-model-diff-replication/automated/checkpoints")) / version_dir
     cfg_path = save_dir / f"{checkpoint_version}_cfg.json"
     weight_path = save_dir / f"{checkpoint_version}.pt"
     
@@ -58,7 +58,8 @@ def upload_checkpoint_to_hf(
 
 if __name__ == "__main__":
     # Example usage:
-    upload_checkpoint_to_hf(
-        version_dir="version_15",
-        checkpoint_version="2"
-    )
+    for i in range(2, 12, 1):
+        upload_checkpoint_to_hf(
+            version_dir=f"version_{i}",
+            checkpoint_version="2"
+        )

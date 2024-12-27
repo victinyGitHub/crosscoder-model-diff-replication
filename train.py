@@ -10,16 +10,6 @@ pythia1 = HookedTransformer.from_pretrained("pythia-1.3b", checkpoint_index=N_1,
 N_2 = 90
 pythia2 = HookedTransformer.from_pretrained("pythia-1.3b", checkpoint_index=N_2, device = device)
 
-# base_model = HookedTransformer.from_pretrained(
-#     "gemma-2-2b", 
-#     device=device, 
-# )
-
-# chat_model = HookedTransformer.from_pretrained(
-#     "gemma-2-2b-it", 
-#     device=device, 
-# )
-
 # %%
 all_tokens = load_pile_deduped_pythia_random_sampled().reshape((-1, 1024))
 

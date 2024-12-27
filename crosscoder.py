@@ -10,7 +10,8 @@ from typing import NamedTuple
 import os
 
 DTYPES = {"fp32": torch.float32, "fp16": torch.float16, "bf16": torch.bfloat16}
-SAVE_DIR = Path("~/.cache/huggingface/crosscoder-model-diff-replication/checkpoints")
+save_path = "~/.cache/huggingface/crosscoder-model-diff-replication/automated/checkpoints"
+SAVE_DIR = Path(save_path)
 
 class LossOutput(NamedTuple):
     # loss: torch.Tensor
@@ -126,7 +127,7 @@ class CrossCoder(nn.Module):
 
     def create_save_dir(self):
         # Expand the ~ to full home directory path
-        base_dir = Path(os.path.expanduser("~/.cache/huggingface/crosscoder-model-diff-replication/checkpoints"))
+        base_dir = Path(os.path.expanduser(save_path))
         
         # Create the base directory if it doesn't exist
         base_dir.mkdir(parents=True, exist_ok=True)
@@ -159,8 +160,9 @@ class CrossCoder(nn.Module):
     @classmethod
     def load_from_hf(
         cls,
-        repo_id: str = "victiny1223/crosscoder-checkpoints",
-        path: str = "blocks.3.hook_resid_pre",
+        repo_id: str = "victiny1223/crosscoder-automated-checkpoints",
+        version_dir: str = "0", # hardcoded
+        checkpoint_vers: str = "2", # hardcoded,
         device: Optional[Union[str, torch.device]] = None
     ) -> "CrossCoder":
         """
@@ -179,11 +181,11 @@ class CrossCoder(nn.Module):
         # Download config and weights
         config_path = hf_hub_download(
             repo_id=repo_id,
-            filename=f"checkpoints/version_15/2_cfg.json" # HARDCODED
+            filename=f"checkpoints/version_{str(version_dir)}/{str(checkpoint_vers)}_cfg.json"
         )
         weights_path = hf_hub_download(
             repo_id=repo_id,
-            filename=f"checkpoints/version_15/2.pt" # HARDCODED
+            filename=f"checkpoints/version_{str(version_dir)}/{str(checkpoint_vers)}.pt"
         )
 
         # Load config
@@ -205,7 +207,7 @@ class CrossCoder(nn.Module):
 
     @classmethod
     def load(cls, version_dir, checkpoint_version): # HARDCODED
-        save_dir = Path("~/.cache/huggingface/crosscoder-model-diff-replication/checkpoints") / str(version_dir)
+        save_dir = SAVE_DIR / str(version_dir)
         cfg_path = save_dir / f"{str(checkpoint_version)}_cfg.json"
         weight_path = save_dir / f"{str(checkpoint_version)}.pt"
 

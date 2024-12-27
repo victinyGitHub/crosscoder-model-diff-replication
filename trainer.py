@@ -79,4 +79,5 @@ class Trainer:
                 if (i + 1) % self.cfg["save_every"] == 0:
                     self.save()
         finally:
+            wandb.finish()
             self.save()
